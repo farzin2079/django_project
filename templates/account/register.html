@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block body %}
+
+  <br>
+<form action="{% url 'register' %}" method="post">
+  {% csrf_token %}
+  <div class="row">
+      <div class="col">
+        <input type="text" name="username" class="form-control" placeholder="Usrename" aria-label="Usrename">
+      </div>
+      <div class="col">
+        <input type="email" name="email"class="form-control" placeholder="email" aria-label="email">
+      </div>
+    </div>
+  <br>
+    <div class="row">
+      <div class="col">
+        <input type="password" name="password" class="form-control" placeholder="password" aria-label="password">
+      </div>
+      <div class="col">
+        <input type="password" name="confirmation" class="form-control" placeholder="confirmation" aria-label="confirm">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">register</button>
+</form>
+
+{% endblock %}

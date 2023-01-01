@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block body %}
+<br>
+<form action="{% url 'appointmnet' %}" method="post">
+    {% csrf_token %}
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="day" id="inlineRadio1 day" value="today">
+        <label class="form-check-label" for="inlineRadio1">today</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="day" id="inlineRadio2 day" value="tommarow">
+        <label class="form-check-label" for="inlineRadio2">tommarow</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="day" id="inlineRadio3 day" value="after">
+        <label class="form-check-label" for="inlineRadio3">after tommarow</label>
+      </div>
+
+    <select class="form-select" aria-label="Default select example" name='time'>
+        <option selected disabled>Open this select menu</option>
+
+        {% for key,value in times.items %}
+        <option value="{{key}}">{{value}}</option>
+        {% endfor %}
+    </select>
+      <button type="submit" class="btn btn-primary">take appointmnet</button>
+</form>
+
+<br>
+<div class="container text-center">
+    <div class="row">
+    
+{% for post in posts %}
+
+        <div class="col-3 post">
+        <img src="{{ post.image.url }}">
+        <p>{{post.discription}}</p>
+        </div>
+
+{% endfor %}
+
+    </div>  
+</div>
+
+<script src="{% static 'js/appointmnet.js' %}"></script>
+{% endblock  %}

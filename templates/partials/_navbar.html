@@ -1,0 +1,61 @@
+{% load static %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a
+      {% if '/' == request.path %}
+      
+      class="nav-link active" 
+      {% else %}
+      class="nav-link" 
+      {% endif %} 
+      aria-current="page" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a {% if '/shop/' == request.path %}
+      
+      class="nav-link active" 
+      {% else %}
+      class="nav-link" 
+      {% endif %} href="/shop">Shop</a>
+    </li>
+    {% if user.is_authenticated %}
+    <li class="nav-item">
+      <a {% if '/account/' == request.path %}
+      
+      class="nav-link active" 
+      {% else %}
+      class="nav-link" 
+      {% endif %} href="/account">account</a>
+    </li>
+
+    <li class="nav-item">
+      <a {% if '/account/logout' == request.path %}
+      
+      class="nav-link active" 
+      {% else %}
+      class="nav-link" 
+      {% endif %} href="/account/logout">logout</a>
+    </li>
+    {% else %}
+    
+            <li class="nav-item">
+              <a {% if '/account/register' == request.path %}
+              
+              class="nav-link active" 
+              {% else %}
+              class="nav-link" 
+              {% endif %} href="/account/register">register</a>
+            </li>
+    
+            <li class="nav-item">
+              <a {% if '/account/login' == request.path %}
+              
+              class="nav-link active" 
+              {% else %}
+              class="nav-link" 
+              {% endif %} href="/account/login">login</a>
+            </li>
+    
+    {% endif %}
+  </ul>

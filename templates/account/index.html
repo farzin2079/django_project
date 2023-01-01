@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+{% load humanize%}
+
+{% block body %}
+    <h1>{{request.user}}</h1>
+    <button type="button" id="watchlist" class="btn btn-outline-primary" >watchlist</button>
+    <button type="button" id="appointment" class="btn btn-outline-primary">appointment taked</button>
+
+    <div id="watchlistbody">
+        <div class="container text-center">
+            <div class="row">
+        {% for watchlist in watchlists%}
+        {% for listing in listings %}
+        {% if watchlist.active == listing %}
+                <div class="col-3 post">
+                <h3>{{listing.title}}</h3>
+                <img src="{{ listing.image.url }}">
+                <p>{{listing.price | intcomma}} toman</p>
+                <p>{{listing.discrption}}</p>
+                <form action="/account/watchlist" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{listing.id}}" name="listing_id">
+                    <button type="submit" class="btn btn-primary">remove from watchlist</button>
+                </form>
+                </div>
+            {% else %}
+            no active listing
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        
+    </div>  
+</div> 
+</div>
+
+<div id="appointmnetbody">
+    <table class="table table-striped">
+        <thead>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Timestamp</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+
+            {% for appointment in appointments %}
+                <tr>
+                    <td>{{appointment.date}}</td>
+                    <td>{{appointment.time}}</td>
+                    <td>{{appointment.timestamp}}</td>
+                    <td>
+                        <form action="{% url 'delete' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="appointment_id" value="{{appointment.id}}">
+                            <button type="submit" class="btn btn-light">
+                                <img src="{% static 'img/icons8-remove-32.png' %}" alt="Delete">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+          </table>
+    </div>
+
+    <script src="{% static 'js/account.js' %}"></script>
+{% endblock  %}

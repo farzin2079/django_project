@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% load humanize %}
+{% load static %}
+
+{% block body %}
+  
+    <div>
+        <form action="{% url 'search' %}" method='get'>
+            <select name="price" class="form-select" multiple aria-label="multiple select example">
+                <option selected="true" disabled="disabled">max price</option>
+
+                {% for key,value in price_choices.items %}
+                    <option value="{{key}}">{{value}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">filter</button>
+        </form>
+    </div>
+<div class="container text-center">
+    <div class="row">
+{% for listing in listings %}
+
+        <div class="col-3 post">
+        <h3>{{listing.title}}</h3>
+        <img src="{{ listing.image.url }}">
+        <p>{{listing.price | intcomma}} toman</p>
+        <p>{{listing.discrption}}</p>
+        <p><mark>
+            {% if listing.is_exist %}
+            we haved
+            {% else %}
+            not at this time
+            {% endif %}
+        </mark></p>
+            <form action="/shop/watchlist" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{listing.id}}" name="listing_id">
+            {% if listing in watchlist %}
+            <button type="submit" class="btn btn-primary">remove from watchlist</button>
+            {% else %}
+            <button type="submit" class="btn btn-primary">add to watchlist</button>
+            {% endif %}
+        </form>
+        </div>
+        
+{% empty %}
+        no active listing
+{% endfor %}
+
+    </div>  
+</div>
+
+{% endblock  %}

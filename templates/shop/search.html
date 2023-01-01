@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% load humanize %}
+{% load static %}
+
+{% block body %}
+
+<div class="container text-center">
+    <div class="row">
+    
+        <div>filter
+            <form action="{% url 'search' %}" method='get'>
+                <select name="price" class="form-control" id="type" required>
+                    <option disabled="disabled">{{values.price}}</option>
+                    {% for key,value in price_choices.items %}
+                        <option value="{{key}}"
+                        {% if values.price == key %}
+                        selected="true"
+                        {% endif %}
+                        >{{value}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">filter</button>
+            </form>
+{% for listing in listings %}
+
+    </div>
+        <div class="col-3 post">
+        <img src="{{ listing.image.url }}">
+        <p>{{listing.price | intcomma}}</p>
+        <p>{{listing.discrption}}</p>
+        <p>{{listing.timestamp | timesince}}
+        </div>
+{% empty %}
+        no active listing with paramets
+{% endfor %}
+
+    </div>  
+</div>
+
+{% endblock  %}

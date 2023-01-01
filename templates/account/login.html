@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<form action="{% url 'login' %}" method="post">
+  {% csrf_token %}
+<div class="row">
+    <div class="col">
+      <input type="text" name="username" class="form-control" placeholder="Usrename" aria-label="Usrename">
+    </div>
+    <div class="col">
+      <input type="password" name="password" class="form-control" placeholder="password" aria-label="password">
+    </div>
+    <button type="submit" class="btn btn-primary">login</button>
+  </form>
+  
+
+{% endblock %}
